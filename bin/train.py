@@ -305,7 +305,9 @@ def run(args):
             h, w = cfg.height, cfg.width
         summary(model.to(device), (3, h, w))
     model = DataParallel(model, device_ids=device_ids).to(device).train()
+    print(args.pre_train)
     if args.pre_train is not None:
+        print('hello')
         if os.path.exists(args.pre_train):
             print(args.pre_train)
             ckpt = torch.load(args.pre_train, map_location=device)
