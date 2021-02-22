@@ -465,7 +465,6 @@ def run(args):
                     'loss_dev_best': best_dict['loss_dev_best'],
                     'state_dict': model.module.state_dict()},
                    os.path.join(args.save_path, 'train.ckpt'))
-    torch.save(model, PATH)
     summary_writer.close()
 
 
