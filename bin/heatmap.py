@@ -85,10 +85,12 @@ def run(args):
         for line in f:
             time_start = time.time()
             jpg_file = line.strip('\n')
-            prefix, figure_data = heatmaper.gen_heatmap(jpg_file)
+            prefix, figure_data, figure_data_heatmap, prob_maps_np = heatmaper.gen_heatmap(jpg_file)
             bn = os.path.basename(jpg_file)
             save_file = '{}/{}{}'.format(args.plot_path, prefix, bn)
             assert cv2.imwrite(save_file, figure_data), "write failed!"
+            save_file_heatmap = '{}/{}{}{}'.format(args.plot_path, 'heatmap', prefix, bn)
+            assert cv2.imwrite(save_file_heatmap, figure_data_heatmap), "write failed!"
             time_spent = time.time() - time_start
             logging.info(
                 '{}, {}, heatmap generated, Run Time : {:.2f} sec'

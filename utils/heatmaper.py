@@ -150,6 +150,33 @@ class Heatmaper(object):
             ax_overlay = self.set_overlay(plt_fig, row_, i, subtitle)
             # overlay_image is assigned multiple times,
             # but we only use the last one to get colorbar
+            overlay_image = self.get_overlayed_smooth(self, ax_overlay, prob_maps_np[i, :, :])
+
+        ax_rawimage = self.set_rawimage(plt_fig, row_)
+        _ = self.get_raw_image(image_color, ax_rawimage)
+        divider = make_axes_locatable(ax_overlay)
+        ax_colorbar = divider.append_axes("right", size="5%", pad=0.05)
+        plt_fig.colorbar(overlay_image, cax=ax_colorbar)
+        plt_fig.tight_layout()
+        figure_data = fig2data(plt_fig)
+        plt.close()
+
+
+
+        ########################################################################"""
+        plt_fig = plt.figure(figsize=(10, row_ * 4), dpi=300)
+
+        # vgg and resnet do not use pixel_std, densenet and inception use.
+        ori_image = image_np[0, 0, :, :] * self.cfg.pixel_std + \
+                    self.cfg.pixel_mean
+        for i in range(num_tasks):
+            prob = torch.sigmoid(logits[i])
+            prob = tensor2numpy(prob)
+            subtitle = '{}:{:.4f}'.format(disease_classes[i],
+                                          prob[0][0])
+            ax_overlay = self.set_overlay(plt_fig, row_, i, subtitle)
+            # overlay_image is assigned multiple times,
+            # but we only use the last one to get colorbar
             overlay_image = self.get_overlayed_img(ori_image,
                                                    logit_maps_np[i, :, :],
                                                    prob_maps_np[i, :, :],
@@ -160,6 +187,7 @@ class Heatmaper(object):
         ax_colorbar = divider.append_axes("right", size="5%", pad=0.05)
         plt_fig.colorbar(overlay_image, cax=ax_colorbar)
         plt_fig.tight_layout()
-        figure_data = fig2data(plt_fig)
+        figure_data_heatmap = fig2data(plt_fig)
         plt.close()
-        return prefix_name, figure_data
+
+        return prefix_name, figure_data, figure_data_heatmap, prob_maps_np
