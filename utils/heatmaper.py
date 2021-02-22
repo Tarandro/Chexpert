@@ -150,7 +150,10 @@ class Heatmaper(object):
             ax_overlay = self.set_overlay(plt_fig, row_, i, subtitle)
             # overlay_image is assigned multiple times,
             # but we only use the last one to get colorbar
-            overlay_image = self.get_overlayed_smooth(self, ax_overlay, prob_maps_np[i, :, :])
+            overlay_image = self.get_overlayed_img(ori_image,
+                                                   logit_maps_np[i, :, :],
+                                                   prob_maps_np[i, :, :],
+                                                   ax_overlay)
 
         ax_rawimage = self.set_rawimage(plt_fig, row_)
         _ = self.get_raw_image(image_color, ax_rawimage)
@@ -177,10 +180,7 @@ class Heatmaper(object):
             ax_overlay = self.set_overlay(plt_fig, row_, i, subtitle)
             # overlay_image is assigned multiple times,
             # but we only use the last one to get colorbar
-            overlay_image = self.get_overlayed_img(ori_image,
-                                                   logit_maps_np[i, :, :],
-                                                   prob_maps_np[i, :, :],
-                                                   ax_overlay)
+            overlay_image = self.get_overlayed_smooth(ax_overlay, prob_maps_np[i, :, :])
         ax_rawimage = self.set_rawimage(plt_fig, row_)
         _ = self.get_raw_image(image_color, ax_rawimage)
         divider = make_axes_locatable(ax_overlay)
