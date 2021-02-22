@@ -311,8 +311,13 @@ def run(args):
         if os.path.exists(args.pre_train):
             print(args.pre_train)
             ckpt = torch.load(args.pre_train, map_location=device)
-            print(ckpt)
-            model.module.load_state_dict(ckpt)
+            print(ckpt['epoch'])
+            model.module.load_state_dict(ckpt['state_dict'])
+            model.module.load_state_dict(ckpt['epoch'])
+            model.module.load_state_dict(ckpt['step'])
+            model.module.load_state_dict(ckpt['acc_dev_best'])
+            model.module.load_state_dict(ckpt['auc_dev_best'])
+            model.module.load_state_dict(ckpt['loss_dev_best'])
             print(model)
     optimizer = get_optimizer(model.parameters(), cfg)
 
@@ -466,6 +471,7 @@ def run(args):
                     'loss_dev_best': best_dict['loss_dev_best'],
                     'state_dict': model.module.state_dict()},
                    os.path.join(args.save_path, 'train.ckpt'))
+    torch.save(model, PATH)
     summary_writer.close()
 
 
