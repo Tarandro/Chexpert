@@ -21,7 +21,6 @@ class ImageDataset(Dataset):
             header = f.readline().strip('\n').split(',')
             self._label_header = [
                 header[7],
-                header[10],
                 header[11],
                 header[13],
                 header[15]]

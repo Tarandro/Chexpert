@@ -59,7 +59,6 @@ def run(args):
         model = Classifier(cfg)
     disease_classes = [
         'Cardiomegaly',
-        'Edema',
         'Consolidation',
         'Atelectasis',
         'Pleural Effusion'

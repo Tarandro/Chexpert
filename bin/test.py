@@ -62,7 +62,6 @@ def test_epoch(cfg, args, model, dataloader, out_csv_path):
     test_header = [
         'Path',
         'Cardiomegaly',
-        'Edema',
         'Consolidation',
         'Atelectasis',
         'Pleural Effusion']
