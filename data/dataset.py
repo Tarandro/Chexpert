@@ -20,23 +20,23 @@ class ImageDataset(Dataset):
         with open(label_path) as f:
             header = f.readline().strip('\n').split(',')
             self._label_header = [
-                header[7],
-                header[11],
-                header[13],
-                header[15]]
+                header[1],
+                header[2],
+                header[3],
+                header[4]]
             for line in f:
                 labels = []
                 fields = line.strip('\n').split(',')
                 image_path = fields[0]
                 flg_enhance = False
                 for index, value in enumerate(fields[5:]):
-                    if index == 5 or index == 8:
+                    if index == 5 or index == 3:
                         labels.append(self.dict[1].get(value))
                         if self.dict[1].get(
                                 value) == '1' and \
                                 self.cfg.enhance_index.count(index) > 0:
                             flg_enhance = True
-                    elif index == 2 or index == 6 or index == 10:
+                    elif index == 1 or index == 2 or index == 4:
                         labels.append(self.dict[0].get(value))
                         if self.dict[0].get(
                                 value) == '1' and \
