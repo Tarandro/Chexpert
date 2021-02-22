@@ -307,8 +307,11 @@ def run(args):
     model = DataParallel(model, device_ids=device_ids).to(device).train()
     if args.pre_train is not None:
         if os.path.exists(args.pre_train):
+            print(args.pre_train)
             ckpt = torch.load(args.pre_train, map_location=device)
+            print(ckpt)
             model.module.load_state_dict(ckpt)
+            print(model)
     optimizer = get_optimizer(model.parameters(), cfg)
 
     src_folder = os.path.dirname(os.path.abspath(__file__)) + '/../'
