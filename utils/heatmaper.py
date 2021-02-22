@@ -12,7 +12,6 @@ from model.utils import tensor2numpy # noqa
 
 disease_classes = [
     'Cardiomegaly',
-    'Edema',
     'Consolidation',
     'Atelectasis',
     'Pleural Effusion'
