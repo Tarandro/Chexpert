@@ -29,7 +29,7 @@ class ImageDataset(Dataset):
                 fields = line.strip('\n').split(',')
                 image_path = fields[0]
                 flg_enhance = False
-                for index, value in enumerate(fields[5:]):
+                for index, value in enumerate(fields):
                     if index == 5 or index == 3:
                         labels.append(self.dict[1].get(value))
                         if self.dict[1].get(
