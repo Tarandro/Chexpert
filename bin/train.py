@@ -305,15 +305,14 @@ def run(args):
             h, w = cfg.height, cfg.width
         summary(model.to(device), (3, h, w))
     model = DataParallel(model, device_ids=device_ids).to(device).train()
-    print(args.pre_train)
     if args.pre_train is not None:
-        print('hello')
         if os.path.exists(args.pre_train):
-            print(args.pre_train)
             ckpt = torch.load(args.pre_train, map_location=device)
-            print(ckpt['epoch'])
+            print('Number of epochs of pre_train model :',ckpt['epoch'])
+            print('best auc of pre_train model :', ckpt['auc_dev_best'])
+            print('best acc of pre_train model :', ckpt['acc_dev_best'])
+            print('best loss of pre_train model :', ckpt['loss_dev_best'])
             model.module.load_state_dict(ckpt['state_dict'])
-            print(model)
     optimizer = get_optimizer(model.parameters(), cfg)
 
     src_folder = os.path.dirname(os.path.abspath(__file__)) + '/../'
