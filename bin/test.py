@@ -61,20 +61,20 @@ def test_epoch(cfg, args, model, dataloader, out_csv_path):
 
     test_header = [
         'Path',
-        "Aortic enlargement",
+        "Aortic_enlargement",
         "Atelectasis",
         "Calcification",
         "Cardiomegaly",
         "Consolidation",
         "ILD",
         "Infiltration",
-        "Lung Opacity",
+        "Lung_Opacity",
         "Nodule/Mass",
-        "Other lesion",
-        "Pleural effusion",
-        "Pleural thickening",
+        "Other_lesion",
+        "Pleural_effusion",
+        "Pleural_thickening",
         "Pneumothorax",
-        "Pulmonary fibrosis"
+        "Pulmonary_fibrosis"
     ]
 
     with open(out_csv_path, 'w') as f:
