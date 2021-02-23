@@ -108,7 +108,7 @@ def run(args):
             prob_maps_np, prob_disease = heatmaper.gen_prob(jpg_file)
             dict_prob_maps[bn] = [prob_disease, prob_maps_np]
 
-            if i%100:
+            if i%100 == 0:
                 logging.info(str(i))
 
             i += 1
