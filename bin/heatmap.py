@@ -59,10 +59,20 @@ def run(args):
         cfg = edict(json.load(f))
         model = Classifier(cfg)
     disease_classes = [
-        'Cardiomegaly',
-        'Consolidation',
-        'Atelectasis',
-        'Pleural Effusion'
+        "Aortic enlargement",
+        "Atelectasis",
+        "Calcification",
+        "Cardiomegaly",
+        "Consolidation",
+        "ILD",
+        "Infiltration",
+        "Lung Opacity",
+        "Nodule/Mass",
+        "Other lesion",
+        "Pleural effusion",
+        "Pleural thickening",
+        "Pneumothorax",
+        "Pulmonary fibrosis"
     ]
     device_ids = list(map(int, args.device_ids.split(',')))
     # check device
@@ -114,7 +124,7 @@ def run(args):
 
             i += 1
 
-    a_file = open("prob_maps.pkl", "wb")
+    a_file = open(args.txt_file+"prob_maps.pkl", "wb")
     pickle.dump(dict_prob_maps, a_file)
     a_file.close()
 
