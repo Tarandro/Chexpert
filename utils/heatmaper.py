@@ -194,3 +194,29 @@ class Heatmaper(object):
         plt.close()
 
         return prefix_name, figure_data, figure_data_heatmap, prob_maps_np, prob_disease
+
+    def gen_prob(self, image_file):
+        """
+        Args:
+            image_file: str to a jpg file path
+        Returns:
+            prefix_name: str of a prefix_name of a jpg with/without prob
+            figure_data: numpy array of a color image
+        """
+        image_tensor, image_color = self.image_reader(image_file)
+        image_tensor = image_tensor.to(self.device)
+        # model inference
+        logits, logit_maps = self.model(image_tensor)
+        logits = torch.stack(logits)
+        logit_maps = torch.stack(logit_maps)
+        # tensor to numpy
+        prob_maps_np = tensor2numpy(torch.sigmoid(logit_maps))
+
+        prob_disease = []
+        for i in range(len(disease_classes)):
+            prob = torch.sigmoid(logits[i])
+            prob = tensor2numpy(prob)
+            prob_disease.append(prob[0][0])
+
+
+        return prob_maps_np, prob_disease
