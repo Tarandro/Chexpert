@@ -172,9 +172,12 @@ class Heatmaper(object):
         # vgg and resnet do not use pixel_std, densenet and inception use.
         ori_image = image_np[0, 0, :, :] * self.cfg.pixel_std + \
                     self.cfg.pixel_mean
+
+        prob_disease = []
         for i in range(num_tasks):
             prob = torch.sigmoid(logits[i])
             prob = tensor2numpy(prob)
+            prob_disease.append(prob[0][0])
             subtitle = '{}:{:.4f}'.format(disease_classes[i],
                                           prob[0][0])
             ax_overlay = self.set_overlay(plt_fig, row_, i, subtitle)
@@ -190,4 +193,4 @@ class Heatmaper(object):
         figure_data_heatmap = fig2data(plt_fig)
         plt.close()
 
-        return prefix_name, figure_data, figure_data_heatmap, prob_maps_np
+        return prefix_name, figure_data, figure_data_heatmap, prob_maps_np, prob_disease

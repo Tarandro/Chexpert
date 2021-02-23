@@ -19,29 +19,19 @@ class ImageDataset(Dataset):
                      {'1.0': '1', '': '0', '0.0': '0', '-1.0': '1'}, ]
         with open(label_path) as f:
             header = f.readline().strip('\n').split(',')
-            self._label_header = [
-                header[1],
-                header[2],
-                header[3],
-                header[4]]
+            self._label_header = [ header[i] for i in range(1,len(header)) ]
+
             for line in f:
                 labels = []
                 fields = line.strip('\n').split(',')
                 image_path = fields[0]
                 flg_enhance = False
-                for index, value in enumerate(fields):
-                    if index == 5 or index == 3:
-                        labels.append(self.dict[1].get(value))
-                        if self.dict[1].get(
-                                value) == '1' and \
-                                self.cfg.enhance_index.count(index) > 0:
-                            flg_enhance = True
-                    elif index == 1 or index == 2 or index == 4:
-                        labels.append(self.dict[0].get(value))
-                        if self.dict[0].get(
-                                value) == '1' and \
-                                self.cfg.enhance_index.count(index) > 0:
-                            flg_enhance = True
+                for index, value in enumerate(fields[1:]):
+                    labels.append(self.dict[0].get(value))
+                    if self.dict[0].get(
+                            value) == '1' and \
+                            self.cfg.enhance_index.count(index) > 0:
+                        flg_enhance = True
                 # labels = ([self.dict.get(n, n) for n in fields[5:]])
                 labels = list(map(int, labels))
                 self._image_paths.append(image_path)

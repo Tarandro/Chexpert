@@ -6,6 +6,7 @@ import logging
 import time
 import torch
 import json
+import pickle
 from easydict import EasyDict as edict
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/../')
 from model.classifier import Classifier # noqa
@@ -81,21 +82,30 @@ def run(args):
     # construct heatmap_cfg
     heatmaper = Heatmaper(args.alpha, args.prefix, cfg, model, device)
     assert args.prefix in ['none', *(disease_classes)]
+
+    dict_prob_maps = {}
     with open(args.txt_file) as f:
         for line in f:
             time_start = time.time()
             jpg_file = line.strip('\n')
-            prefix, figure_data, figure_data_heatmap, prob_maps_np = heatmaper.gen_heatmap(jpg_file)
+            prefix, figure_data, figure_data_heatmap, prob_maps_np, prob_disease = heatmaper.gen_heatmap(jpg_file)
             bn = os.path.basename(jpg_file)
             save_file = '{}/{}{}'.format(args.plot_path, prefix, bn)
             assert cv2.imwrite(save_file, figure_data), "write failed!"
             save_file_heatmap = '{}/{}{}{}'.format(args.plot_path, 'heatmap', prefix, bn)
             assert cv2.imwrite(save_file_heatmap, figure_data_heatmap), "write failed!"
+
+            dict_prob_maps[bn] = [prob_disease, prob_maps_np]
+
             time_spent = time.time() - time_start
             logging.info(
                 '{}, {}, heatmap generated, Run Time : {:.2f} sec'
                 .format(time.strftime("%Y-%m-%d %H:%M:%S"),
                         jpg_file, time_spent))
+
+    a_file = open("prob_maps.pkl", "wb")
+    pickle.dump(dict_prob_maps, a_file)
+    a_file.close()
 
 
 def main():
