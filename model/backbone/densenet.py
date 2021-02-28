@@ -134,7 +134,7 @@ def densenet121(cfg, **kwargs):
     Args:
         pretrained (bool): If True, returns a model pre-trained on ImageNet
     """
-    model = DenseNet(num_init_features=128, growth_rate=32, block_config=(6, 12, 24, 16),  # noqa
+    model = DenseNet(num_init_features=64, growth_rate=32, block_config=(6, 12, 24, 16),  # noqa
                      norm_type=cfg.norm_type, **kwargs)
     if cfg.pretrained:
         # '.'s are no longer allowed in module names, but pervious _DenseLayer
