@@ -31,7 +31,7 @@ class Classifier(nn.Module):
         self.cfg = cfg
         self.backbone = BACKBONES[cfg.backbone](cfg)
         self.global_pool = GlobalPool(cfg)
-        self.expand = 3
+        self.expand = 1
         if cfg.global_pool == 'AVG_MAX':
             self.expand = 2
         elif cfg.global_pool == 'AVG_MAX_LSE':
