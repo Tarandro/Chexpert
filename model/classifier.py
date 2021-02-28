@@ -145,7 +145,6 @@ class Classifier(nn.Module):
             if not (self.cfg.global_pool == 'AVG_MAX' or
                     self.cfg.global_pool == 'AVG_MAX_LSE'):
                 logit_map = classifier(feat_map)
-                print(logit_map.size())
                 logit_maps.append(logit_map.squeeze())
             # (N, C, 1, 1)
             feat = self.global_pool(feat_map, logit_map)
