@@ -168,6 +168,16 @@ def train_epoch(summary, summary_dev, cfg, args, model, dataloader,
                     summary_dev['auc'].mean(),
                     time_spent))
 
+            print('{}, Dev, Step : {}, Loss : {}, Acc : {}, Auc : {},'
+                'Mean auc: {:.3f} ''Run Time : {:.2f} sec' .format(
+                    time.strftime("%Y-%m-%d %H:%M:%S"),
+                    summary['step'],
+                    loss_dev_str,
+                    acc_dev_str,
+                    auc_dev_str,
+                    summary_dev['auc'].mean(),
+                    time_spent))
+
             for t in range(len(cfg.num_classes)):
                 summary_writer.add_scalar(
                     'dev/loss_{}'.format(dev_header[t]),
