@@ -11,20 +11,10 @@ from model.utils import tensor2numpy # noqa
 
 
 disease_classes = [
-    "Aortic_enlargement",
-    "Atelectasis",
-    "Calcification",
-    "Cardiomegaly",
-    "Consolidation",
-    "ILD",
-    "Infiltration",
-    "Lung_Opacity",
-    "Nodule/Mass",
-    "Other_lesion",
-    "Pleural_effusion",
-    "Pleural_thickening",
-    "Pneumothorax",
-    "Pulmonary_fibrosis"
+    "Negative_for_Pneumonia",
+    "Typical_Appearance",
+    "Indeterminate_Appearance",
+    "Atypical_Appearance"
 ]
 
 
