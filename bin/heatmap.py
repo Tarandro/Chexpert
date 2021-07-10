@@ -59,20 +59,10 @@ def run(args):
         cfg = edict(json.load(f))
         model = Classifier(cfg)
     disease_classes = [
-        "Aortic_enlargement",
-        "Atelectasis",
-        "Calcification",
-        "Cardiomegaly",
-        "Consolidation",
-        "ILD",
-        "Infiltration",
-        "Lung_Opacity",
-        "Nodule/Mass",
-        "Other_lesion",
-        "Pleural_effusion",
-        "Pleural_thickening",
-        "Pneumothorax",
-        "Pulmonary_fibrosis"
+        "Negative_for_Pneumonia",
+        "Typical_Appearance",
+        "Indeterminate_Appearance",
+        "Atypical_Appearance"
     ]
     device_ids = list(map(int, args.device_ids.split(',')))
     # check device
